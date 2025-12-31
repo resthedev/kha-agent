@@ -3,14 +3,16 @@
 import { useChat } from "ai/react";
 import { useRef, useEffect, useLayoutEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Terminal, Loader2, User, Bot, Cloud, Calculator } from "lucide-react";
+import { Send, Terminal, Loader2, User, Bot, Cloud, Calculator, Check } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function Home() {
     const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat();
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
+    const animatedMessageIds = useRef<Set<string>>(new Set());
 
     const scrollToBottom = () => {
         requestAnimationFrame(() => {
@@ -46,9 +48,8 @@ export default function Home() {
                     </div>
                     <div>
                         <h1 className="text-xl font-bold bg-gradient-to-r from-[#7aa2f7] to-[#bb9af7] bg-clip-text text-transparent">
-                            Agent Antigravity
+                            Kha's Agent
                         </h1>
-                        <p className="text-xs text-[#565f89]">Powered by Claude Haiku 4.5</p>
                     </div>
                 </div>
             </header>
@@ -63,7 +64,7 @@ export default function Home() {
                             className="flex flex-col items-center justify-center min-h-[50vh] text-center space-y-4"
                         >
                             <div className="p-6 rounded-3xl bg-gradient-to-b from-[#24283b]/30 to-[#1a1b26]/30 border border-[#7aa2f7]/5 shadow-[0_8px_32px_0_rgba(0,0,0,0.1)] backdrop-blur-sm">
-                                <Terminal className="w-12 h-12 text-[#7aa2f7] drop-shadow-[0_0_10px_rgba(122,162,247,0.1)]" />
+                                <Bot className="w-12 h-12 text-[#7aa2f7]" />
                             </div>
                             <h2 className="text-2xl font-bold text-[#c0caf5]">Ready to help</h2>
                             <p className="text-[#565f89] max-w-md">
@@ -73,19 +74,25 @@ export default function Home() {
                         </motion.div>
                     )}
 
-                    {messages.map((m, idx) => (
-                        <motion.div
-                            key={m.id}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{
-                                duration: 0.2,
-                                ease: [0.25, 0.1, 0.25, 1]
-                            }}
-                            layout={false}
-                            style={{ willChange: "transform, opacity" }}
-                            className={`flex gap-4 ${m.role === "user" ? "flex-row-reverse" : "flex-row"}`}
-                        >
+                    {messages.map((m, idx) => {
+                        const hasAnimated = animatedMessageIds.current.has(m.id);
+                        if (!hasAnimated) {
+                            animatedMessageIds.current.add(m.id);
+                        }
+
+                        return (
+                            <motion.div
+                                key={m.id}
+                                initial={hasAnimated ? false : { opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{
+                                    duration: 0.2,
+                                    ease: [0.25, 0.1, 0.25, 1]
+                                }}
+                                layout={false}
+                                style={{ willChange: "transform, opacity" }}
+                                className={`flex gap-4 ${m.role === "user" ? "flex-row-reverse" : "flex-row"}`}
+                            >
                             <div
                                 className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center shadow-sm ${m.role === "user" ? "bg-[#bb9af7] shadow-[#bb9af7]/5" : "bg-[#7aa2f7] shadow-[#7aa2f7]/5"
                                     }`}
@@ -116,8 +123,8 @@ export default function Home() {
                                         m.parts.map((part, index) => {
                                             if (part.type === 'text') {
                                                 return (
-                                                    <div key={index} className="prose prose-invert prose-sm max-w-none mb-2 leading-relaxed">
-                                                        <ReactMarkdown>{part.text}</ReactMarkdown>
+                                                    <div key={index} className="prose prose-invert prose-sm max-w-none leading-relaxed streaming-text [&>*:last-child]:mb-0 last:mb-0">
+                                                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{part.text}</ReactMarkdown>
                                                     </div>
                                                 );
                                             }
@@ -144,12 +151,16 @@ export default function Home() {
                                                             ) : (
                                                                 <Terminal className="w-4 h-4 text-[#565f89]" />
                                                             )}
-                                                            <span className="font-mono text-[#7dcfff] group-hover:text-[#7aa2f7] transition-colors">
+                                                            <span className="font-mono text-[#7dcfff] group-hover:text-[#7aa2f7] transition-colors flex-1">
                                                                 {toolInvocation.toolName}
                                                             </span>
-                                                            <span className="text-[#565f89] text-xs uppercase tracking-wider">
-                                                                {addResult ? 'completed' : 'running...'}
-                                                            </span>
+                                                            {addResult ? (
+                                                                <div className="relative w-4 h-4">
+                                                                    <Check className="w-4 h-4 text-[#9ece6a] checkmark-icon" strokeWidth={3} />
+                                                                </div>
+                                                            ) : (
+                                                                <Loader2 className="w-4 h-4 animate-spin text-[#7aa2f7]" />
+                                                            )}
                                                         </div>
                                                         {addResult && (
                                                             <div
@@ -171,30 +182,45 @@ export default function Home() {
                                     ) : (
                                         // Fallback for simple messages
                                         m.content && (
-                                            <div className="prose prose-invert prose-sm max-w-none leading-relaxed">
-                                                <ReactMarkdown>{m.content}</ReactMarkdown>
+                                            <div className="prose prose-invert prose-sm max-w-none leading-relaxed streaming-text [&>*:last-child]:mb-0">
+                                                <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.content}</ReactMarkdown>
                                             </div>
                                         )
                                     )}
                                 </div>
                             </div>
                         </motion.div>
-                    ))}
+                        );
+                    })}
 
-                    {isLoading && messages[messages.length - 1]?.role !== 'assistant' && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="flex gap-4"
-                        >
-                            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#7aa2f7] shadow-sm shadow-[#7aa2f7]/5 flex items-center justify-center">
-                                <Bot className="w-5 h-5 text-[#1a1b26]" />
-                            </div>
-                            <div className="bg-gradient-to-br from-[#24283b]/80 to-[#1f2335]/80 border border-[#ffffff]/5 rounded-2xl px-6 py-4 shadow-sm backdrop-blur-sm">
-                                <Loader2 className="w-5 h-5 animate-spin text-[#7aa2f7]" />
-                            </div>
-                        </motion.div>
-                    )}
+                    {(() => {
+                        const lastMessage = messages[messages.length - 1];
+                        const shouldShowSpinner = isLoading && (
+                            messages.length === 0 ||
+                            lastMessage?.role === 'user' ||
+                            (lastMessage?.role === 'assistant' && (
+                                (!lastMessage.content || lastMessage.content.trim() === '') &&
+                                (!lastMessage.parts || lastMessage.parts.length === 0 ||
+                                    (lastMessage.parts.length === 1 && lastMessage.parts[0].type === 'text' && (!lastMessage.parts[0].text || lastMessage.parts[0].text.trim() === ''))
+                                )
+                            ))
+                        );
+
+                        return shouldShowSpinner && (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="flex gap-4"
+                            >
+                                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#7aa2f7] shadow-sm shadow-[#7aa2f7]/5 flex items-center justify-center">
+                                    <Bot className="w-5 h-5 text-[#1a1b26]" />
+                                </div>
+                                <div className="bg-gradient-to-br from-[#24283b]/80 to-[#1f2335]/80 border border-[#ffffff]/5 rounded-2xl px-6 py-4 shadow-sm backdrop-blur-sm">
+                                    <Loader2 className="w-5 h-5 animate-spin text-[#7aa2f7]" />
+                                </div>
+                            </motion.div>
+                        );
+                    })()}
                 </AnimatePresence>
                 {error && (
                     <motion.div
@@ -221,7 +247,7 @@ export default function Home() {
                 <div className="max-w-3xl mx-auto relative z-10">
                     <form onSubmit={handleSubmit} className="relative group">
                         <input
-                            className="w-full bg-[#16161e]/50 border border-[#2f3549]/30 rounded-2xl pl-6 pr-14 py-5 text-[#c0caf5] placeholder-[#565f89] focus:outline-none focus:ring-1 focus:ring-[#7aa2f7]/20 focus:border-[#7aa2f7]/20 focus:bg-[#16161e]/80 transition-all shadow-[0_8px_32px_0_rgba(0,0,0,0.1)] backdrop-blur-xl"
+                            className="w-full bg-[#16161e]/50 border border-[#2f3549]/30 rounded-2xl pl-6 pr-14 py-5 text-[#c0caf5] placeholder-[#565f89] focus:outline-none focus:border-[#7aa2f7]/30 focus:bg-[#16161e]/80 transition-colors duration-200 ease-out shadow-[0_8px_32px_0_rgba(0,0,0,0.1)] backdrop-blur-xl"
                             value={input}
                             placeholder="Type your message..."
                             onChange={handleInputChange}
@@ -234,11 +260,6 @@ export default function Home() {
                             <Send className="w-5 h-5" />
                         </button>
                     </form>
-                    <div className="mt-4 text-center">
-                        <p className="text-[10px] text-[#565f89] font-medium tracking-wide opacity-50">
-                            AI Agent using Next.js, Tailwind, & Vercel AI SDK
-                        </p>
-                    </div>
                 </div>
             </div>
         </main >

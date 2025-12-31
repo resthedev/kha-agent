@@ -4,7 +4,9 @@
       "Bash(cat:*)",
       "Bash(find:*)",
       "Bash(bun add:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
