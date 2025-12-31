@@ -29,7 +29,7 @@ export async function POST(req: Request) {
             weather: tool({
                 description: weatherTool.description,
                 parameters: z.object({
-                    location: z.string().describe("The city and state, e.g. San Francisco, CA"),
+                    location: z.string().describe("The city and state, e.g. San Francisco, California, USA"),
                 }),
                 execute: async (args) => {
                     return weatherTool.execute(args);
