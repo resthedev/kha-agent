@@ -1,10 +1,23 @@
+import { z } from "zod";
 import { Tool } from "../types";
 
-export const calculatorTool: Tool = {
+// Define the Zod schema - single source of truth
+const calculatorSchema = z.object({
+    operation: z.enum(["add", "subtract", "multiply", "divide"]).describe("The mathematical operation to perform"),
+    a: z.number().describe("The first number"),
+    b: z.number().describe("The second number"),
+});
+
+// TypeScript type automatically inferred from schema
+export type CalculatorArgs = z.infer<typeof calculatorSchema>;
+
+export const calculatorTool: Tool<typeof calculatorSchema> = {
     name: "calculator",
     description: "A simple calculator that can add, subtract, multiply, or divide two numbers",
+    schema: calculatorSchema,
 
-    execute: async (args: { operation: string; a: number; b: number }) => {
+    // Args are now properly typed as CalculatorArgs automatically!
+    execute: async (args) => {
         const { operation, a, b } = args;
         switch (operation) {
             case "add": return a + b;
@@ -13,19 +26,5 @@ export const calculatorTool: Tool = {
             case "divide": return a / b;
             default: throw new Error(`Unknown operation: ${operation}`);
         }
-    },
-
-    schema: {
-        type: "object",
-        properties: {
-            operation: {
-                type: "string",
-                enum: ["add", "subtract", "multiply", "divide"],
-                description: "The mathematical operation to perform",
-            },
-            a: { type: "number", description: "The first number" },
-            b: { type: "number", description: "The second number" },
-        },
-        required: ["operation", "a", "b"],
     },
 };

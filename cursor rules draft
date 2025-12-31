@@ -1,0 +1,16 @@
+Kha Cursor Rules
+
+# Typescript/Javascript/React Projects
+
+## Project Setup & Tooling
+- Always use **Bun** instead of npm for package management
+- Use the latest version of NextJS with App Router and React for all React projects
+- Use the latest version of Tailwind CSS
+
+
+## Code Style & Patterns
+- **Function components**: Always use function declarations, not arrow functions for components
+- **Optional chaining**: Use `?.` liberally for safe property access
+- **Nullish coalescing**: Use `??` for default values
+- **Comments**: Add explanatory comments for complex logic or performance optimizations. Omit when not needed.
+
