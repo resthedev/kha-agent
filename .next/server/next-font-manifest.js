@@ -1,0 +1,1 @@
+self.__NEXT_FONT_MANIFEST="{\"pages\":{},\"app\":{\"/Users/kha/Desktop/Desktop - Kha Macbook/Projects/Agents/my-first-agent/src/app/layout\":[\"static/media/13971731025ec697-s.p.woff2\"]},\"appUsingSizeAdjust\":true,\"pagesUsingSizeAdjust\":false}"
