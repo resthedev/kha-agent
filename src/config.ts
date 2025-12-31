@@ -1,7 +1,12 @@
-// Configuration - replace with your actual API key
+// Configuration - API key should be set in .env.local as ANTHROPIC_API_KEY
+const anthropicApiKey = process.env.ANTHROPIC_API_KEY;
+if (!anthropicApiKey) {
+    throw new Error("ANTHROPIC_API_KEY environment variable is not set. Please set it in .env.local");
+}
+
 export const config = {
     anthropic: {
-        apiKey: "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", // Replace with your actual Anthropic API key
+        apiKey: anthropicApiKey,
         model: "claude-haiku-4-5-20251001",
         maxTokens: 1024,
     },

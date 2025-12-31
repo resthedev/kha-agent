@@ -1,9 +1,14 @@
 import Anthropic from "@anthropic-ai/sdk";
 import * as readline from "readline";
 
+const apiKey = process.env.ANTHROPIC_API_KEY;
+if (!apiKey) {
+    console.error("Error: ANTHROPIC_API_KEY environment variable is not set. Please set it in .env.local");
+    process.exit(1);
+}
 
 const anthropic = new Anthropic({
-    apiKey: "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", // Replace with your actual API key
+    apiKey,
 });
 
 // Create an interface to read from terminal
