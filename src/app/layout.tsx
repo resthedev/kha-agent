@@ -20,8 +20,8 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body className={`${dmSans.variable} font-sans antialiased min-h-screen flex flex-col`}>
+        <html lang="en" suppressHydrationWarning>
+            <body className={`${dmSans.variable} font-sans antialiased min-h-screen flex flex-col`} suppressHydrationWarning>
                 {children}
             </body>
         </html>
