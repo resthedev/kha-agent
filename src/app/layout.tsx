@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
+import { DM_Sans, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
 const dmSans = DM_Sans({
     subsets: ["latin"],
     variable: "--font-dm-sans",
     weight: ["400", "500", "700"],
+    display: 'swap',
+});
+
+const instrumentSerif = Instrument_Serif({
+    subsets: ["latin"],
+    variable: "--font-instrument-serif",
+    weight: ["400"],
     display: 'swap',
 });
 
@@ -21,7 +28,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={`${dmSans.variable} font-sans antialiased min-h-screen flex flex-col`} suppressHydrationWarning>
+            <body className={`${dmSans.variable} ${instrumentSerif.variable} font-sans antialiased min-h-screen flex flex-col`} suppressHydrationWarning>
                 {children}
             </body>
         </html>

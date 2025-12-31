@@ -30,6 +30,7 @@ const config: Config = {
             },
             fontFamily: {
                 sans: ["var(--font-dm-sans)"],
+                serif: ["var(--font-instrument-serif)"],
             },
         },
     },
