@@ -14,7 +14,7 @@ export function ChatInput({ input, isLoading, onInputChange, onSubmit }: ChatInp
             <div className="max-w-3xl mx-auto relative z-10">
                 <form onSubmit={onSubmit} className="relative group">
                     <input
-                        className="w-full bg-[#16161e]/50 border border-[#2f3549]/30 rounded-2xl pl-6 pr-14 py-5 text-[#c0caf5] placeholder-[#565f89] focus:outline-none focus:border-[#7aa2f7]/30 focus:bg-[#16161e]/80 transition-colors duration-200 ease-out shadow-[0_8px_32px_0_rgba(0,0,0,0.1)] backdrop-blur-xl"
+                        className="w-full bg-white/[0.03] border border-white/[0.05] rounded-2xl pl-6 pr-14 py-5 text-[#c0caf5] placeholder-white/20 focus:outline-none focus:border-white/20 focus:bg-white/[0.08] transition-all duration-300 ease-out shadow-[0_8px_32px_0_rgba(0,0,0,0.2)] backdrop-blur-3xl ring-1 ring-white/5"
                         value={input}
                         placeholder="Type your message..."
                         onChange={onInputChange}
