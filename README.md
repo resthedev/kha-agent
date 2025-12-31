@@ -1,4 +1,4 @@
-# my-first-agent
+# Kha Agent
 
 To install dependencies:
 
