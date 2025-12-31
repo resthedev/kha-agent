@@ -13,7 +13,7 @@ export function useAutoScroll(messages: unknown[]) {
     const isNearBottom = useCallback(() => {
         const container = containerRef.current;
         if (!container) return true;
-        
+
         const threshold = 150; // pixels from bottom - increased for better UX
         const isAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < threshold;
         return isAtBottom;
@@ -34,13 +34,19 @@ export function useAutoScroll(messages: unknown[]) {
             requestAnimationFrame(() => {
                 if (messagesEndRef.current && containerRef.current) {
                     isScrollingProgrammaticallyRef.current = true;
-                    
-                    // Scroll to show the messagesEndRef with some padding
-                    messagesEndRef.current.scrollIntoView({
-                        behavior: smooth ? "smooth" : "auto",
-                        block: "end",
-                        inline: "nearest"
-                    });
+
+                    // Scroll container to absolute bottom to show all content
+                    const container = containerRef.current;
+                    const targetScroll = container.scrollHeight - container.clientHeight;
+
+                    if (smooth) {
+                        container.scrollTo({
+                            top: targetScroll,
+                            behavior: "smooth"
+                        });
+                    } else {
+                        container.scrollTop = targetScroll;
+                    }
 
                     // Reset the programmatic scrolling flag after a short delay
                     setTimeout(() => {
@@ -57,7 +63,7 @@ export function useAutoScroll(messages: unknown[]) {
         if (!container) return;
 
         let scrollTimeout: NodeJS.Timeout;
-        
+
         const handleScroll = () => {
             // Ignore programmatic scrolls
             if (isScrollingProgrammaticallyRef.current) {
@@ -70,7 +76,7 @@ export function useAutoScroll(messages: unknown[]) {
             // Set a timeout to check if user has stopped scrolling
             scrollTimeout = setTimeout(() => {
                 const nearBottom = isNearBottom();
-                
+
                 // If user scrolled up significantly, mark it
                 if (!nearBottom) {
                     userHasScrolledRef.current = true;
@@ -113,7 +119,7 @@ export function useAutoScroll(messages: unknown[]) {
         const observer = new MutationObserver(() => {
             if (!scrollScheduled && !userHasScrolledRef.current) {
                 scrollScheduled = true;
-                
+
                 // Cancel any pending animation frame
                 if (animationFrameId !== null) {
                     cancelAnimationFrame(animationFrameId);
@@ -122,7 +128,7 @@ export function useAutoScroll(messages: unknown[]) {
                 // Schedule smooth scroll for streaming content
                 animationFrameId = requestAnimationFrame(() => {
                     scrollToBottom(true, 20);
-                    
+
                     // Reset the flag after a delay
                     setTimeout(() => {
                         scrollScheduled = false;

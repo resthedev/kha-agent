@@ -43,7 +43,7 @@ export default function Home() {
                 )}
 
                 {error && <ErrorMessage message={error.message} />}
-                <div ref={messagesEndRef} className="h-4" />
+                <div ref={messagesEndRef} className="h-32" />
             </div>
 
             <ChatInput

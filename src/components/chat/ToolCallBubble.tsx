@@ -117,7 +117,7 @@ function ToolCallBubbleInner({
 
                             return (
                                 <div key={toolCallId} className="text-sm">
-                                    <div className="flex items-center gap-3 p-3 px-6 rounded-none bg-[#16161e]/50 border-t border-[#ffffff]/5 backdrop-blur-md transition-all hover:bg-[#16161e]/80">
+                                    <div className="flex items-center gap-3 p-3 px-6 rounded-none bg-[#16161e]/50 border-t border-[#ffffff]/5 backdrop-blur-md transition-all">
                                         {toolInvocation.toolName === 'weather' ? (
                                             <Cloud className="w-4 h-4 text-[#7aa2f7] drop-shadow-[0_0_8px_rgba(122,162,247,0.15)]" />
                                         ) : toolInvocation.toolName === 'calculator' ? (
@@ -126,7 +126,7 @@ function ToolCallBubbleInner({
                                             <Terminal className="w-4 h-4 text-[#565f89]" />
                                         )}
                                         <div className="flex-1 min-w-0">
-                                            <div className="font-mono text-[#7dcfff] group-hover:text-[#7aa2f7] transition-colors">
+                                            <div className="font-mono text-[#7dcfff] transition-colors">
                                                 {toolInvocation.toolName}
                                             </div>
                                             {'args' in toolInvocation && (
