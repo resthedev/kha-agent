@@ -1,11 +1,33 @@
 import type { Metadata } from "next";
-import { DM_Sans, Instrument_Serif } from "next/font/google";
+import { Instrument_Serif } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const dmSans = DM_Sans({
-    subsets: ["latin"],
-    variable: "--font-dm-sans",
-    weight: ["400", "500", "700"],
+const ppNeueMontreal = localFont({
+    src: [
+        {
+            path: "./fonts/PPNeueMontreal-Regular.woff2",
+            weight: "400",
+            style: "normal",
+        },
+        {
+            path: "./fonts/PPNeueMontreal-Medium.woff2",
+            weight: "500",
+            style: "normal",
+        },
+        {
+            path: "./fonts/PPNeueMontreal-Bold.woff2",
+            weight: "700",
+            style: "normal",
+        },
+    ],
+    variable: "--font-pp-neue-montreal",
+    display: 'swap',
+});
+
+const ppNeueMontrealMono = localFont({
+    src: "./fonts/PPNeueMontrealMono-Regular.woff2",
+    variable: "--font-pp-neue-montreal-mono",
     display: 'swap',
 });
 
@@ -28,7 +50,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={`${dmSans.variable} ${instrumentSerif.variable} font-sans antialiased min-h-screen flex flex-col`} suppressHydrationWarning>
+            <body className={`${ppNeueMontreal.variable} ${ppNeueMontrealMono.variable} ${instrumentSerif.variable} font-sans antialiased min-h-screen flex flex-col`} suppressHydrationWarning>
                 {children}
             </body>
         </html>

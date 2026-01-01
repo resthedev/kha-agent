@@ -29,8 +29,9 @@ const config: Config = {
                 }
             },
             fontFamily: {
-                sans: ["var(--font-dm-sans)"],
+                sans: ["var(--font-pp-neue-montreal)"],
                 serif: ["var(--font-instrument-serif)"],
+                mono: ["var(--font-pp-neue-montreal-mono)"],
             },
         },
     },

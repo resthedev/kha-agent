@@ -9,7 +9,7 @@ export function EmptyState() {
         >
             <h2 className="text-3xl font-serif text-[#c0caf5]">Kha's Agent</h2>
             <p className="text-[#565f89] max-w-md">
-                I can help you with calculations, check the weather, and more.
+                I can help you with calculations, check the weather, and more.<br />
                 Just ask freely.
             </p>
         </motion.div>
