@@ -6,3 +6,11 @@ export interface Tool<TSchema extends z.ZodType = z.ZodType> {
     schema: TSchema;
     execute: (args: z.infer<TSchema>) => Promise<any>;
 }
+
+export interface ToolInvocation {
+    toolCallId: string;
+    toolName: string;
+    args: Record<string, unknown>;
+    result: any;
+    state: "result" | "error";
+}

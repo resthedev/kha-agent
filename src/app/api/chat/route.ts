@@ -1,7 +1,7 @@
 import { anthropic } from "@ai-sdk/anthropic";
-import { streamText, tool } from "ai";
-import { calculatorTool } from "@/tools/calculator";
-import { weatherTool } from "@/tools/weather";
+import { streamText } from "ai";
+import { buildWebTools } from "@/shared/agent/webTools";
+import { model } from "@/shared/config";
 
 export const maxDuration = 30;
 
@@ -9,22 +9,10 @@ export async function POST(req: Request) {
     const { messages } = await req.json();
 
     const result = streamText({
-        model: anthropic("claude-haiku-4-5-20251001"),
+        model: anthropic(model),
         messages,
         maxSteps: 5,
-        tools: {
-            // Use Zod schemas directly from tool files - single source of truth!
-            calculator: tool({
-                description: calculatorTool.description,
-                parameters: calculatorTool.schema,
-                execute: calculatorTool.execute,
-            }),
-            weather: tool({
-                description: weatherTool.description,
-                parameters: weatherTool.schema,
-                execute: weatherTool.execute,
-            }),
-        },
+        tools: buildWebTools(),
     });
 
     return result.toDataStreamResponse();

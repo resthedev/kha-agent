@@ -1,3 +1,15 @@
+/**
+ * HISTORICAL REFERENCE - All-in-one first agent implementation
+ * 
+ * This file is kept for record-keeping and as an easily runnable example.
+ * 
+ * The maintained implementations are:
+ * - Web: src/app/api/chat/route.ts
+ * - CLI: src/cli/index.ts + src/cli/agent.ts
+ * 
+ * Both now share tools and config from src/shared/
+ */
+
 import Anthropic from "@anthropic-ai/sdk";
 import * as readline from "readline";
 

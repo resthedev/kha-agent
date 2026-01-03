@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "chat": "bun run src/cli.ts"
+    "chat": "bun run src/cli/index.ts"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^1.0.5",

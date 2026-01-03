@@ -2,13 +2,13 @@
 
 import { useChat } from "ai/react";
 import { AnimatePresence } from "framer-motion";
-import { ChatHeader } from "@/components/chat/ChatHeader";
-import { EmptyState } from "@/components/chat/EmptyState";
-import { ChatInput } from "@/components/chat/ChatInput";
-import { MessageList } from "@/components/chat/MessageList";
-import { ErrorMessage } from "@/components/chat/ErrorMessage";
-import { useAnimationTracking } from "@/hooks/useAnimationTracking";
-import { useAutoScroll } from "@/hooks/useAutoScroll";
+import { ChatHeader } from "@/web/components/chat/ChatHeader";
+import { EmptyState } from "@/web/components/chat/EmptyState";
+import { ChatInput } from "@/web/components/chat/ChatInput";
+import { MessageList } from "@/web/components/chat/MessageList";
+import { ErrorMessage } from "@/web/components/chat/ErrorMessage";
+import { useAnimationTracking } from "@/web/hooks/useAnimationTracking";
+import { useAutoScroll } from "@/web/hooks/useAutoScroll";
 
 export default function Home() {
     const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat();
