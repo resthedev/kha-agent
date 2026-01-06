@@ -100,8 +100,8 @@ OPENAI_EMBEDDING_MODEL=text-embedding-3-small
 # Optional: Number of context chunks to retrieve (default: 5)
 RAG_TOP_K=5
 
-# Optional: Minimum similarity score threshold (default: 0.5)
-RAG_MIN_SCORE=0.5
+# Optional: Minimum similarity score threshold (default: 0.25)
+RAG_MIN_SCORE=0.25
 
 # Optional: Custom knowledge base directory (default: ./knowledge-base)
 KNOWLEDGE_BASE_DIR=/path/to/your/knowledge-base

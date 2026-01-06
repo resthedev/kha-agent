@@ -39,6 +39,9 @@ function cosineSimilarity(a: number[], b: number[]): number {
  * Retrieve top-K most relevant chunks for a query
  */
 export async function retrieveRelevantChunks(query: string): Promise<RetrievalResult[]> {
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/2727ac65-d4c4-4377-a3ee-e2be505a8a5e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'retrieve.ts:42',message:'retrieveRelevantChunks called',data:{query},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'D'})}).catch(()=>{});
+    // #endregion
     const config = getRagConfig();
     const { topK, minScore, embeddingModel } = config;
 
@@ -60,10 +63,20 @@ export async function retrieveRelevantChunks(query: string): Promise<RetrievalRe
 
     // Sort by score descending
     results.sort((a, b) => b.score - a.score);
+    
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/2727ac65-d4c4-4377-a3ee-e2be505a8a5e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'retrieve.ts:65',message:'top results before filtering',data:{query,topResults:results.slice(0,10).map(r=>({score:r.score,headings:r.chunk.metadata.headings,textPreview:r.chunk.text.substring(0,120)})),minScore,topK},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A,D'})}).catch(()=>{});
+    // #endregion
 
     // Filter by minimum score and take top K
-    return results
+    const filtered = results
         .filter(result => result.score >= minScore)
         .slice(0, topK);
+    
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/2727ac65-d4c4-4377-a3ee-e2be505a8a5e',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'retrieve.ts:73',message:'after filtering',data:{numFiltered:filtered.length,filtered:filtered.map(r=>({score:r.score,headings:r.chunk.metadata.headings,textPreview:r.chunk.text.substring(0,120)}))},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A,B'})}).catch(()=>{});
+    // #endregion
+    
+    return filtered;
 }
 
