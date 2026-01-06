@@ -2,6 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { getToolByName } from "../shared/tools";
 import { apiKey, model, maxTokens } from "../shared/config";
 import { toAnthropicTools } from "../shared/agent/anthropicTools";
+import { buildRagSystemPromptFromMessages } from "../shared/rag";
 
 const anthropic = new Anthropic({ apiKey });
 
@@ -34,11 +35,15 @@ export class Agent {
     }
 
     private async getClaudeResponseStreaming(): Promise<Anthropic.Message> {
+        // Build RAG context from conversation history
+        const ragSystemPrompt = await buildRagSystemPromptFromMessages(this.conversationHistory);
+
         const stream = await anthropic.messages.stream({
             model,
             max_tokens: maxTokens,
             messages: this.conversationHistory,
             tools: toAnthropicTools(),
+            system: ragSystemPrompt || undefined,
         });
 
         let hasStartedText = false;
