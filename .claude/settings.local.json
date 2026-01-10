@@ -25,7 +25,9 @@
       "Bash(brew upgrade:*)",
       "Bash(git checkout:*)",
       "Read(//Users/kha/Desktop/Projects/Agents/kha-agent/**)",
-      "Bash(bunx tsc:*)"
+      "Bash(bunx tsc:*)",
+      "Bash(curl:*)",
+      "Bash(timeout 3 bun run:*)"
     ]
   },
   "outputStyle": "Explanatory"
