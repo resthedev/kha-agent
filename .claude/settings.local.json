@@ -23,7 +23,9 @@
       "Bash(ls:*)",
       "Bash(node --version:*)",
       "Bash(brew upgrade:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Read(//Users/kha/Desktop/Projects/Agents/kha-agent/**)"
     ]
-  }
+  },
+  "outputStyle": "Explanatory"
 }
