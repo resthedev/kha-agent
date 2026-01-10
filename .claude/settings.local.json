@@ -13,8 +13,22 @@
       "Bash(timeout 10 bun run:*)",
       "Bash(bun run:*)",
       "Bash(export PATH=\"/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin:$HOME/.bun/bin:$PATH\")",
-      "Bash(Field required\".\n\nAdded conversion logic to transform Zod schemas to JSON Schema format,\nincluding support for string, number, and enum types with descriptions.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(bunx npm view:*)",
+      "Bash(npm view:*)",
+      "Bash(bun:*)",
+      "Bash(ls:*)",
+      "Bash(node --version:*)",
+      "Bash(brew upgrade:*)",
+      "Bash(git checkout:*)",
+      "Read(//Users/kha/Desktop/Projects/Agents/kha-agent/**)",
+      "Bash(bunx tsc:*)",
+      "Bash(curl:*)",
+      "Bash(timeout 3 bun run:*)"
     ]
-  }
+  },
+  "outputStyle": "Explanatory"
 }
