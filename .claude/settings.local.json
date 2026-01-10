@@ -24,7 +24,8 @@
       "Bash(node --version:*)",
       "Bash(brew upgrade:*)",
       "Bash(git checkout:*)",
-      "Read(//Users/kha/Desktop/Projects/Agents/kha-agent/**)"
+      "Read(//Users/kha/Desktop/Projects/Agents/kha-agent/**)",
+      "Bash(bunx tsc:*)"
     ]
   },
   "outputStyle": "Explanatory"
