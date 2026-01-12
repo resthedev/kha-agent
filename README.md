@@ -135,15 +135,15 @@ import { z } from "zod";
 import { Tool } from "../types";
 
 export const myTool: Tool = {
-    name: "my_tool",
-    description: "Description of what the tool does",
-    schema: z.object({
-        param: z.string().describe("Parameter description"),
-    }),
-    execute: async ({ param }) => {
-        // Your tool logic here
-        return `Result: ${param}`;
-    },
+  name: "my_tool",
+  description: "Description of what the tool does",
+  schema: z.object({
+    param: z.string().describe("Parameter description"),
+  }),
+  execute: async ({ param }) => {
+    // Your tool logic here
+    return `Result: ${param}`;
+  },
 };
 ```
 

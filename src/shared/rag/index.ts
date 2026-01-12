@@ -7,4 +7,3 @@ export { buildRagSystemPrompt, buildRagSystemPromptFromMessages } from "./ragPro
 export { buildOrUpdateIndex, getIndex } from "./kbIndex";
 export { validateRagEnvironment, getRagConfig } from "./config";
 export type { RetrievalResult, KnowledgeBaseIndex, RagConfig } from "./types";
-

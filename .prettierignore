@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+build
+dist
+.rag-cache
+bun.lockb
+*.d.ts
+next-env.d.ts
+*.log
+.DS_Store

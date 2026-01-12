@@ -1,0 +1,14 @@
+[
+  {
+    "key": "cmd+shift+f",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Format Current File",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+k cmd+f",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Lint and Fix Current File",
+    "when": "editorTextFocus"
+  }
+]

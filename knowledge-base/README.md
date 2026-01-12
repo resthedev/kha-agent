@@ -15,6 +15,7 @@ This directory contains markdown files that feed into the agent's knowledge base
 ### Adding new knowledge
 
 Simply add or edit `.md` files in this directory. The system will:
+
 - Automatically detect changes on next startup
 - Incrementally update only changed files
 - Keep a cached index for fast retrieval
@@ -33,4 +34,3 @@ bun run rag:index
 - Keep information organized within sections
 - The agent will cite which file it's pulling information from
 - If information isn't in the knowledge base, the agent will indicate it doesn't know
-
